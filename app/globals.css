@@ -1,0 +1,696 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    transition: background-color 300ms ease-in-out, color 300ms ease-in-out;
+  }
+}
+
+/* Theme Variables */
+:root {
+  /* Yellow Theme (Default) */
+  --theme-bg: 254 252 232; /* yellow-50 */
+  --theme-card: 255 255 255; /* white */
+  --theme-card-accent: 254 249 195; /* yellow-100 */
+  --theme-card-accent-hover: 254 240 138; /* yellow-200 */
+  --theme-border: 229 231 235; /* gray-200 */
+  --theme-text: 17 24 39; /* gray-900 */
+  --theme-text-muted: 107 114 128; /* gray-500 */
+  --theme-primary: 234 179 8; /* yellow-500 */
+  --theme-primary-foreground: 255 255 255; /* white */
+  --theme-input: 255 255 255; /* white */
+  --theme-button-outline: 255 255 255; /* white */
+  --theme-button-outline-hover: 254 249 195; /* yellow-100 */
+  --theme-button-outline-text: 17 24 39; /* gray-900 */
+}
+
+.theme-red {
+  --theme-bg: 254 242 242; /* red-50 */
+  --theme-card: 255 255 255;
+  --theme-card-accent: 254 226 226; /* red-100 */
+  --theme-card-accent-hover: 252 165 165; /* red-300 */
+  --theme-border: 229 231 235;
+  --theme-text: 17 24 39;
+  --theme-text-muted: 107 114 128;
+  --theme-primary: 239 68 68; /* red-500 */
+  --theme-primary-foreground: 255 255 255;
+  --theme-input: 255 255 255;
+  --theme-button-outline: 255 255 255;
+  --theme-button-outline-hover: 254 226 226; /* red-100 */
+  --theme-button-outline-text: 17 24 39;
+}
+
+.theme-orange {
+  --theme-bg: 255 247 237; /* orange-50 */
+  --theme-card: 255 255 255;
+  --theme-card-accent: 254 215 170; /* orange-200 */
+  --theme-card-accent-hover: 251 146 60; /* orange-400 */
+  --theme-border: 229 231 235;
+  --theme-text: 17 24 39;
+  --theme-text-muted: 107 114 128;
+  --theme-primary: 249 115 22; /* orange-500 */
+  --theme-primary-foreground: 255 255 255;
+  --theme-input: 255 255 255;
+  --theme-button-outline: 255 255 255;
+  --theme-button-outline-hover: 254 215 170; /* orange-200 */
+  --theme-button-outline-text: 17 24 39;
+}
+
+.theme-yellow {
+  --theme-bg: 254 252 232; /* yellow-50 */
+  --theme-card: 255 255 255;
+  --theme-card-accent: 254 249 195; /* yellow-100 */
+  --theme-card-accent-hover: 254 240 138; /* yellow-200 */
+  --theme-border: 229 231 235;
+  --theme-text: 17 24 39;
+  --theme-text-muted: 107 114 128;
+  --theme-primary: 234 179 8; /* yellow-500 */
+  --theme-primary-foreground: 255 255 255;
+  --theme-input: 255 255 255;
+  --theme-button-outline: 255 255 255;
+  --theme-button-outline-hover: 254 249 195; /* yellow-100 */
+  --theme-button-outline-text: 17 24 39;
+}
+
+.theme-green {
+  --theme-bg: 240 253 244; /* green-50 */
+  --theme-card: 255 255 255;
+  --theme-card-accent: 187 247 208; /* green-200 */
+  --theme-card-accent-hover: 134 239 172; /* green-300 */
+  --theme-border: 229 231 235;
+  --theme-text: 17 24 39;
+  --theme-text-muted: 107 114 128;
+  --theme-primary: 34 197 94; /* green-500 */
+  --theme-primary-foreground: 255 255 255;
+  --theme-input: 255 255 255;
+  --theme-button-outline: 255 255 255;
+  --theme-button-outline-hover: 187 247 208; /* green-200 */
+  --theme-button-outline-text: 17 24 39;
+}
+
+.theme-cyan {
+  --theme-bg: 236 254 255; /* cyan-50 */
+  --theme-card: 255 255 255;
+  --theme-card-accent: 165 243 252; /* cyan-200 */
+  --theme-card-accent-hover: 103 232 249; /* cyan-300 */
+  --theme-border: 229 231 235;
+  --theme-text: 17 24 39;
+  --theme-text-muted: 107 114 128;
+  --theme-primary: 6 182 212; /* cyan-500 */
+  --theme-primary-foreground: 255 255 255;
+  --theme-input: 255 255 255;
+  --theme-button-outline: 255 255 255;
+  --theme-button-outline-hover: 165 243 252; /* cyan-200 */
+  --theme-button-outline-text: 17 24 39;
+}
+
+.theme-blue {
+  --theme-bg: 239 246 255; /* blue-50 */
+  --theme-card: 255 255 255;
+  --theme-card-accent: 191 219 254; /* blue-200 */
+  --theme-card-accent-hover: 147 197 253; /* blue-300 */
+  --theme-border: 229 231 235;
+  --theme-text: 17 24 39;
+  --theme-text-muted: 107 114 128;
+  --theme-primary: 59 130 246; /* blue-500 */
+  --theme-primary-foreground: 255 255 255;
+  --theme-input: 255 255 255;
+  --theme-button-outline: 255 255 255;
+  --theme-button-outline-hover: 191 219 254; /* blue-200 */
+  --theme-button-outline-text: 17 24 39;
+}
+
+.theme-purple {
+  --theme-bg: 250 245 255; /* purple-50 */
+  --theme-card: 255 255 255;
+  --theme-card-accent: 221 214 254; /* purple-200 */
+  --theme-card-accent-hover: 196 181 253; /* purple-300 */
+  --theme-border: 229 231 235;
+  --theme-text: 17 24 39;
+  --theme-text-muted: 107 114 128;
+  --theme-primary: 168 85 247; /* purple-500 */
+  --theme-primary-foreground: 255 255 255;
+  --theme-input: 255 255 255;
+  --theme-button-outline: 255 255 255;
+  --theme-button-outline-hover: 221 214 254; /* purple-200 */
+  --theme-button-outline-text: 17 24 39;
+}
+
+.theme-black {
+  --theme-bg: 17 24 39; /* gray-900 */
+  --theme-card: 31 41 55; /* gray-800 */
+  --theme-card-accent: 55 65 81; /* gray-700 */
+  --theme-card-accent-hover: 75 85 99; /* gray-600 */
+  --theme-border: 75 85 99; /* gray-600 */
+  --theme-text: 243 244 246; /* gray-100 */
+  --theme-text-muted: 156 163 175; /* gray-400 */
+  --theme-primary: 99 102 241; /* indigo-500 */
+  --theme-primary-foreground: 255 255 255;
+  --theme-input: 55 65 81; /* gray-700 */
+  --theme-button-outline: 55 65 81; /* gray-700 */
+  --theme-button-outline-hover: 75 85 99; /* gray-600 */
+  --theme-button-outline-text: 243 244 246; /* gray-100 */
+}
+
+/* Theme utility classes with smooth transitions */
+.bg-theme-bg {
+  background-color: rgb(var(--theme-bg));
+  transition: background-color 300ms ease-in-out;
+}
+
+.bg-theme-card {
+  background-color: rgb(var(--theme-card));
+  transition: background-color 300ms ease-in-out;
+}
+
+.bg-theme-card-accent {
+  background-color: rgb(var(--theme-card-accent));
+  transition: background-color 300ms ease-in-out;
+}
+
+.bg-theme-card-accent-hover {
+  background-color: rgb(var(--theme-card-accent-hover));
+}
+
+.bg-theme-primary {
+  background-color: rgb(var(--theme-primary));
+  transition: background-color 300ms ease-in-out;
+}
+
+.bg-theme-primary\/90 {
+  background-color: rgb(var(--theme-primary) / 0.9);
+  transition: background-color 300ms ease-in-out;
+}
+
+.bg-theme-input {
+  background-color: rgb(var(--theme-input));
+  transition: background-color 300ms ease-in-out;
+}
+
+.bg-theme-button-outline {
+  background-color: rgb(var(--theme-button-outline));
+  transition: background-color 300ms ease-in-out;
+}
+
+.bg-theme-button-outline-hover {
+  background-color: rgb(var(--theme-button-outline-hover));
+}
+
+.text-theme-text {
+  color: rgb(var(--theme-text));
+  transition: color 300ms ease-in-out;
+}
+
+.text-theme-text-muted {
+  color: rgb(var(--theme-text-muted));
+  transition: color 300ms ease-in-out;
+}
+
+.text-theme-primary {
+  color: rgb(var(--theme-primary));
+  transition: color 300ms ease-in-out;
+}
+
+.text-theme-primary-foreground {
+  color: rgb(var(--theme-primary-foreground));
+  transition: color 300ms ease-in-out;
+}
+
+.text-theme-button-outline {
+  color: rgb(var(--theme-button-outline-text));
+  transition: color 300ms ease-in-out;
+}
+
+.border-theme-border {
+  border-color: rgb(var(--theme-border));
+  transition: border-color 300ms ease-in-out;
+}
+
+.border-theme-primary {
+  border-color: rgb(var(--theme-primary));
+  transition: border-color 300ms ease-in-out;
+}
+
+.placeholder\:text-theme-text-muted::placeholder {
+  color: rgb(var(--theme-text-muted));
+  transition: color 300ms ease-in-out;
+}
+
+.hover\:bg-theme-card-accent:hover {
+  background-color: rgb(var(--theme-card-accent));
+}
+
+.hover\:bg-theme-card-accent-hover:hover {
+  background-color: rgb(var(--theme-card-accent-hover));
+}
+
+.hover\:bg-theme-primary\/90:hover {
+  background-color: rgb(var(--theme-primary) / 0.9);
+}
+
+.hover\:bg-theme-button-outline-hover:hover {
+  background-color: rgb(var(--theme-button-outline-hover));
+}
+
+/* Custom button styling for theme consistency */
+.btn-theme-outline {
+  background-color: rgb(var(--theme-button-outline));
+  color: rgb(var(--theme-button-outline-text));
+  border-color: rgb(var(--theme-border));
+  transition: all 300ms ease-in-out;
+}
+
+.btn-theme-outline:hover {
+  background-color: rgb(var(--theme-button-outline-hover));
+  color: rgb(var(--theme-button-outline-text));
+  border-color: rgb(var(--theme-border));
+}
+
+.btn-theme-outline:focus-visible {
+  outline: 2px solid rgb(var(--theme-primary));
+  outline-offset: 2px;
+  border-color: rgb(var(--theme-border));
+}
+
+/* Ensure dropdown menus inherit theme colors properly */
+[data-radix-popper-content-wrapper] {
+  z-index: 50;
+}
+
+/* Override any default focus/active states that might cause black borders */
+button:focus-visible {
+  outline: 2px solid rgb(var(--theme-primary));
+  outline-offset: 2px;
+  border-color: rgb(var(--theme-border)) !important;
+}
+
+/* Ensure dropdown trigger doesn't get unwanted borders */
+[data-state="open"] {
+  border-color: rgb(var(--theme-border)) !important;
+}
+
+/* Smooth transitions for all interactive elements */
+button,
+input,
+textarea,
+[role="menuitem"] {
+  transition: all 300ms ease-in-out;
+}
+
+/* Override shadcn button variants to use theme colors */
+.theme-black button[data-variant="outline"] {
+  background-color: rgb(var(--theme-button-outline)) !important;
+  color: rgb(var(--theme-button-outline-text)) !important;
+  border-color: rgb(var(--theme-border)) !important;
+}
+
+.theme-black button[data-variant="outline"]:hover {
+  background-color: rgb(var(--theme-button-outline-hover)) !important;
+  color: rgb(var(--theme-button-outline-text)) !important;
+  border-color: rgb(var(--theme-border)) !important;
+}
+
+/* Ensure all outline buttons work correctly in dark theme */
+.theme-black .btn-theme-outline,
+.theme-black button[class*="outline"] {
+  background-color: rgb(var(--theme-button-outline)) !important;
+  color: rgb(var(--theme-button-outline-text)) !important;
+  border-color: rgb(var(--theme-border)) !important;
+}
+
+.theme-black .btn-theme-outline:hover,
+.theme-black button[class*="outline"]:hover {
+  background-color: rgb(var(--theme-button-outline-hover)) !important;
+  color: rgb(var(--theme-button-outline-text)) !important;
+  border-color: rgb(var(--theme-border)) !important;
+}
+
+/* Emotion selector theme-aware styling */
+.theme-black .emotion-button-selected {
+  background-color: rgb(var(--theme-card-accent)) !important;
+  border-color: rgb(var(--theme-primary)) !important;
+  color: rgb(var(--theme-text)) !important;
+}
+
+.theme-black .emotion-button-unselected {
+  background-color: rgb(var(--theme-button-outline)) !important;
+  border-color: rgb(var(--theme-border)) !important;
+  color: rgb(var(--theme-text)) !important;
+}
+
+.theme-black .emotion-button-unselected:hover {
+  background-color: rgb(var(--theme-card-accent)) !important;
+  border-color: rgb(var(--theme-border)) !important;
+  color: rgb(var(--theme-text)) !important;
+}
+
+/* Ensure emotion icons are visible in all themes */
+.theme-black .emotion-icon {
+  color: rgb(var(--theme-text-muted)) !important;
+}
+
+.theme-black .emotion-icon-selected {
+  color: rgb(var(--theme-primary)) !important;
+}
+
+/* Footer responsive styling */
+.footer-text {
+  font-size: 0.875rem;
+  opacity: 0.7;
+  transition: opacity 300ms ease-in-out;
+}
+
+.footer-text:hover {
+  opacity: 1;
+}
+
+/* Ensure footer is always at bottom but not sticky */
+.main-container {
+  min-height: calc(100vh - 2rem);
+  display: flex;
+  flex-direction: column;
+}
+
+.content-area {
+  flex: 1;
+}
+
+/* Error message styling for dark mode */
+.theme-black .error-message {
+  background-color: rgb(127 29 29 / 0.2) !important; /* red-900/20 */
+  border-color: rgb(153 27 27) !important; /* red-800 */
+  color: rgb(252 165 165) !important; /* red-300 */
+}
+
+/* Ensure error messages work in all themes */
+.error-message {
+  background-color: rgb(254 242 242); /* red-50 */
+  border-color: rgb(254 202 202); /* red-200 */
+  color: rgb(185 28 28); /* red-700 */
+  transition: all 300ms ease-in-out;
+}
+
+.theme-black .error-message {
+  background-color: rgb(127 29 29 / 0.2);
+  border-color: rgb(153 27 27);
+  color: rgb(252 165 165);
+}
+
+/* Autofocus styling */
+input:focus,
+textarea:focus {
+  outline: 2px solid rgb(var(--theme-primary));
+  outline-offset: 2px;
+  border-color: rgb(var(--theme-primary)) !important;
+}
+
+/* Markdown Editor Styles */
+.prose {
+  color: rgb(var(--theme-text));
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: rgb(var(--theme-text));
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.prose h1 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.prose h2 {
+  font-size: 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose h3 {
+  font-size: 1.125rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose h4,
+.prose h5 {
+  font-size: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose p {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.prose code {
+  background-color: rgb(var(--theme-card-accent));
+  color: rgb(var(--theme-text));
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+.prose pre {
+  position: relative;
+  background-color: rgb(var(--theme-card-accent));
+  border: 1px solid rgb(var(--theme-border));
+  border-radius: 0.5rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  overflow-x: auto;
+}
+
+.prose pre code {
+  background-color: transparent !important;
+  padding: 0 !important;
+  border-radius: 0;
+  font-size: 0.875rem;
+  color: rgb(var(--theme-text));
+}
+
+.prose blockquote {
+  border-left: 4px solid rgb(var(--theme-primary));
+  padding-left: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin: 1rem 0;
+  background-color: rgb(var(--theme-card-accent));
+  font-style: italic;
+  color: rgb(var(--theme-text-muted));
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(var(--theme-border));
+  margin: 1rem 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.prose strong {
+  font-weight: 600;
+  color: rgb(var(--theme-text));
+}
+
+.prose em {
+  font-style: italic;
+  color: rgb(var(--theme-text));
+}
+
+.prose del {
+  text-decoration: line-through;
+  color: rgb(var(--theme-text-muted));
+}
+
+.prose u {
+  text-decoration: underline;
+  color: rgb(var(--theme-text));
+}
+
+/* Smooth transitions for tab switching */
+.markdown-editor-tab {
+  transition: all 200ms ease-in-out;
+}
+
+/* Image upload drag and drop styling */
+.image-drop-zone {
+  transition: all 200ms ease-in-out;
+}
+
+.image-drop-zone.drag-over {
+  background-color: rgb(var(--theme-card-accent));
+  border-color: rgb(var(--theme-primary));
+}
+
+/* Auto-save indicator */
+.auto-save-indicator {
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+}
+
+.auto-save-indicator.saving {
+  opacity: 1;
+}
+
+/* Enhanced image loading and error states */
+.loading-image {
+  opacity: 0.5 !important;
+  background: linear-gradient(
+    90deg,
+    rgb(var(--theme-card-accent)) 25%,
+    transparent 50%,
+    rgb(var(--theme-card-accent)) 75%
+  );
+  background-size: 200% 100%;
+  animation: loading-shimmer 1.5s infinite;
+  position: relative;
+}
+
+.loading-image::after {
+  content: "Loading image...";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(var(--theme-text-muted));
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 0.5rem;
+  background-color: rgb(var(--theme-card) / 0.9);
+  border-radius: 0.25rem;
+  border: 1px solid rgb(var(--theme-border));
+  backdrop-filter: blur(4px);
+}
+
+.error-image {
+  opacity: 0.6 !important;
+  border: 2px dashed rgb(var(--theme-border)) !important;
+  background-color: rgb(var(--theme-card-accent));
+  position: relative;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.error-image::after {
+  content: "⚠️ Image failed to load";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgb(var(--theme-text-muted));
+  font-size: 0.875rem;
+  text-align: center;
+  padding: 0.5rem;
+  background-color: rgb(var(--theme-card));
+  border-radius: 0.25rem;
+  border: 1px solid rgb(var(--theme-border));
+}
+
+@keyframes loading-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Formatting button active states */
+.btn-theme-outline:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease-in-out;
+}
+
+/* Better focus states for textarea */
+.markdown-editor textarea:focus {
+  outline: 2px solid rgb(var(--theme-primary));
+  outline-offset: 2px;
+  border-color: rgb(var(--theme-primary)) !important;
+  box-shadow: 0 0 0 3px rgb(var(--theme-primary) / 0.1);
+}
+
+/* Debug styles for blob images */
+img[data-blob-id] {
+  border: 2px solid rgb(var(--theme-primary) / 0.3);
+  position: relative;
+}
+
+img[data-blob-id]::before {
+  content: "Blob: " attr(data-blob-id);
+  position: absolute;
+  top: -20px;
+  left: 0;
+  font-size: 10px;
+  color: rgb(var(--theme-primary));
+  background: rgb(var(--theme-card));
+  padding: 2px 4px;
+  border-radius: 2px;
+  z-index: 10;
+}
