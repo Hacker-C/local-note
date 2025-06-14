@@ -221,8 +221,6 @@ export function useNotes(): UseNotesReturn {
 
   // Initialize database and load notes
   useEffect(() => {
-    let mounted = true
-
     const initializeDB = async () => {
       if (initializationAttempted.current) return
       initializationAttempted.current = true
@@ -240,26 +238,18 @@ export function useNotes(): UseNotesReturn {
         // and only add demo data on first launch
         await notesDB.seedInitialData()
 
-        if (mounted) {
-          await refreshNotes()
-          setLoading(false)
-        }
+        await refreshNotes()
+        setLoading(false)
       } catch (err) {
-        if (mounted) {
-          const errorMessage = err instanceof Error ? err.message : "Failed to initialize database"
-          setError(errorMessage)
-          setIsHealthy(false)
-          setLoading(false)
-          console.error("Database initialization failed:", err)
-        }
+        const errorMessage = err instanceof Error ? err.message : "Failed to initialize database"
+        setError(errorMessage)
+        setIsHealthy(false)
+        setLoading(false)
+        console.error("Database initialization failed:", err)
       }
     }
 
     initializeDB()
-
-    return () => {
-      mounted = false
-    }
   }, [refreshNotes])
 
   // Cleanup on unmount
