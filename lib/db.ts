@@ -70,7 +70,7 @@ class NotesDB {
       const timeout = setTimeout(() => {
         if (request) {
           try {
-            request.abort?.()
+            // request?.abort?.()
           } catch (e) {
             // Ignore abort errors
           }
@@ -448,47 +448,11 @@ class NotesDB {
       }
 
       // This is the first launch, add demo data
-      const initialNotes = [
-        {
-          title: "Meeting Notes",
-          content:
-            "Discussed project timeline and deliverables for Q2. Key points covered: budget allocation for new features, team restructuring to improve efficiency, and client feedback integration.",
-          date: "June 11, 2025",
-          emotion: "Happy" as const,
-        },
-        {
-          title: "Book Ideas",
-          content:
-            "Character development concepts and plot outline for the new mystery novel. Main character: Detective Sarah Chen, experienced but haunted by a past case.",
-          date: "June 10, 2025",
-          emotion: "Funny" as const,
-        },
-        {
-          title: "Travel Planning",
-          content:
-            "Research destinations for summer vacation. Consider budget, weather, and activities. Look into flight options and accommodation.",
-          date: "June 9, 2025",
-          emotion: "Calm" as const,
-        },
-        {
-          title: "Recipe Collection",
-          content:
-            "New pasta recipe with garlic and herbs. Simple ingredients but amazing flavor. Perfect for quick weeknight dinners.",
-          date: "June 8, 2025",
-          emotion: "Happy" as const,
-        },
-        {
-          title: "Difficult Day",
-          content:
-            "Today was challenging with several setbacks at work. The client meeting didn't go as planned, and we had to revise our approach completely.",
-          date: "June 7, 2025",
-          emotion: "Sad" as const,
-        },
-      ]
+      // const initialNotes = []
 
-      for (const noteData of initialNotes) {
-        await this.createNote(noteData)
-      }
+      // for (const noteData of initialNotes) {
+      //   await this.createNote(noteData)
+      // }
 
       // Mark app as initialized after adding demo data
       await this.markAsInitialized()

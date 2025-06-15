@@ -14,10 +14,11 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
   const [loadingImages, setLoadingImages] = useState<Set<string>>(new Set())
   const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set())
   const [failedImages, setFailedImages] = useState<Set<string>>(new Set())
+  const [blobUrlMap, setBlobUrlMap] = useState(new Map<string, string>());
 
   const renderedContent = useMemo(() => {
-    return parseMarkdown(content)
-  }, [content])
+    return parseMarkdown(content, blobUrlMap)
+  }, [content, blobUrlMap])
 
   // Load blob URLs for images after rendering
   useEffect(() => {
@@ -58,9 +59,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
             // fixme：DOM updated is not work on the the page
             testImg.onload = () => {
               console.log(`Blob image loaded successfully: ${blobId}`)
-              img.src = blobUrl
-              img.classList.remove("loading-image")
-              img.style.opacity = "1"
+              setBlobUrlMap(prevMap => new Map(prevMap).set(blobId, blobUrl));
               Logger.info(img)
               setLoadedImages((prev) => new Set(prev).add(blobId))
               setLoadingImages((prev) => {
@@ -72,10 +71,6 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
 
             testImg.onerror = (error) => {
               console.error(`Failed to load blob image ${blobId}:`, error)
-              img.alt = `Failed to load image: ${blobId}`
-              img.classList.add("error-image")
-              img.classList.remove("loading-image")
-              img.style.opacity = "1"
               setFailedImages((prev) => new Set(prev).add(blobId))
               setLoadingImages((prev) => {
                 const newSet = new Set(prev)
@@ -88,10 +83,6 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
             testImg.src = blobUrl
           } else {
             console.warn(`No blob URL created for image: ${blobId}`)
-            img.alt = `Image not found (ID: ${blobId})`
-            img.classList.add("error-image")
-            img.classList.remove("loading-image")
-            img.style.opacity = "1"
             setFailedImages((prev) => new Set(prev).add(blobId))
             setLoadingImages((prev) => {
               const newSet = new Set(prev)
@@ -101,10 +92,6 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
           }
         } catch (error) {
           console.error(`Failed to load blob image ${blobId}:`, error)
-          img.alt = `Error loading image: ${blobId}`
-          img.classList.add("error-image")
-          img.classList.remove("loading-image")
-          img.style.opacity = "1"
           setFailedImages((prev) => new Set(prev).add(blobId))
           setLoadingImages((prev) => {
             const newSet = new Set(prev)
@@ -149,7 +136,7 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
   )
 }
 
-function parseMarkdown(markdown: string): string {
+function parseMarkdown(markdown: string, blobUrlMap: Map<string, string>): string {
   let html = markdown
 
   // Escape HTML to prevent XSS
@@ -209,14 +196,29 @@ function parseMarkdown(markdown: string): string {
       const imageId = src.replace("blob:", "")
       console.log(`Found blob image: ${imageId}`)
 
-      // Create a placeholder image with the blob ID
+      let imgSrc = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDIwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjNmNGY2Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjUwIiByPSIyMCIgZmlsbD0iIzljYTNhZiIvPgo8dGV4dCB4PSIxMDAiIHk9IjU1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjM3MzgwIiBmb250LXNpemU9IjEyIj5Mb2FkaW5nLi4uPC90ZXh0Pgo8L3N2Zz4="
+      let imgAlt = "Loading..."
+      let imgClass = "max-w-full h-auto rounded-lg border border-theme-border my-4 loading-image"
+      let imgStyle = "opacity: 0.5; min-height: 100px; background-color: rgb(var(--theme-card-accent));"
+
+      if (blobUrlMap.has(imageId)) {
+        const blobUrl = blobUrlMap.get(imageId)
+        if (blobUrl) {
+          imgSrc = blobUrl
+          imgAlt = alt // Use original alt text from markdown
+          imgClass = "max-w-full h-auto rounded-lg border border-theme-border my-4"
+          imgStyle = ""
+        }
+      }
+
+      // Create the image tag
       return `<img 
-        src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDIwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjNmNGY2Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjUwIiByPSIyMCIgZmlsbD0iIzljYTNhZiIvPgo8dGV4dCB4PSIxMDAiIHk9IjU1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjM3MzgwIiBmb250LXNpemU9IjEyIj5Mb2FkaW5nLi4uPC90ZXh0Pgo8L3N2Zz4=" 
-        alt="加载中..." 
+        src="${imgSrc}" 
+        alt="${imgAlt}" 
         data-blob-id="${imageId}" 
-        class="max-w-full h-auto rounded-lg border border-theme-border my-4 loading-image" 
+        class="${imgClass}" 
         loading="lazy" 
-        style="opacity: 0.5; min-height: 100px; background-color: rgb(var(--theme-card-accent));" />`
+        style="${imgStyle}" />`
     }
 
     // Regular image
