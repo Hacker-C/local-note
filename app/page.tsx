@@ -161,7 +161,7 @@ export default function NotesPage() {
         <header className="text-center mb-6">
           <div className="flex items-center justify-between mb-4">
             <div></div> {/* Empty div for spacing */}
-            <h1 className="text-4xl font-serif font-bold text-theme-text">Local Notes</h1>
+            <h1 className="text-4xl font-serif font-bold text-theme-text">Local Note</h1>
             <ThemeSelector />
           </div>
           <p className="text-theme-text-muted mt-1">Capture your thoughts and ideas, all data processing stay 100% local (no server uploads)</p>

@@ -71,7 +71,7 @@ export class ImportExportManager {
         settings,
         metadata: {
           totalNotes: notes.length,
-          exportedBy: "Local Notes App",
+          exportedBy: "Local Note App",
           appVersion: this.CURRENT_VERSION,
         },
       }
