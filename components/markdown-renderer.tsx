@@ -2,6 +2,7 @@
 
 import { useMemo, useEffect, useRef, useState } from "react"
 import { imageStorage } from "@/lib/image-storage"
+import { Logger } from "@/lib/dev";
 
 interface MarkdownRendererProps {
   content: string
@@ -54,11 +55,13 @@ export function MarkdownRenderer({ content, className = "" }: MarkdownRendererPr
             const testImg = new Image()
             testImg.crossOrigin = "anonymous"
 
+            // fixme：DOM updated is not work on the the page
             testImg.onload = () => {
               console.log(`Blob image loaded successfully: ${blobId}`)
               img.src = blobUrl
               img.classList.remove("loading-image")
               img.style.opacity = "1"
+              Logger.info(img)
               setLoadedImages((prev) => new Set(prev).add(blobId))
               setLoadingImages((prev) => {
                 const newSet = new Set(prev)
@@ -194,8 +197,11 @@ function parseMarkdown(markdown: string): string {
     '<blockquote class="border-l-4 border-theme-primary pl-4 py-2 my-4 bg-theme-card-accent italic text-theme-text-muted">$1</blockquote>',
   )
 
+  // Line breaks
+  html = html.replace(/\n/g, "<br>")
+
   // Images - handle both regular markdown images and our blob images
-  html = html.replace(/!\[([^\]]*)\]$$([^)]+)$$/g, (match, alt, src) => {
+  html = html.replace( /!\[([^\]]*)\]\(([^)]+)\)/g, (match, alt, src) => {
     console.log(`Processing image: alt="${alt}", src="${src}"`)
 
     // Check if this is a blob image ID
@@ -206,7 +212,7 @@ function parseMarkdown(markdown: string): string {
       // Create a placeholder image with the blob ID
       return `<img 
         src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgdmlld0JveD0iMCAwIDIwMCAxMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTAwIiBmaWxsPSIjZjNmNGY2Ii8+CjxjaXJjbGUgY3g9IjEwMCIgY3k9IjUwIiByPSIyMCIgZmlsbD0iIzljYTNhZiIvPgo8dGV4dCB4PSIxMDAiIHk9IjU1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSIjNjM3MzgwIiBmb250LXNpemU9IjEyIj5Mb2FkaW5nLi4uPC90ZXh0Pgo8L3N2Zz4=" 
-        alt="${alt}" 
+        alt="加载中..." 
         data-blob-id="${imageId}" 
         class="max-w-full h-auto rounded-lg border border-theme-border my-4 loading-image" 
         loading="lazy" 
@@ -216,9 +222,6 @@ function parseMarkdown(markdown: string): string {
     // Regular image
     return `<img src="${src}" alt="${alt}" class="max-w-full h-auto rounded-lg border border-theme-border my-4" loading="lazy" />`
   })
-
-  // Line breaks
-  html = html.replace(/\n/g, "<br>")
 
   // Paragraphs (group consecutive lines that aren't already wrapped in tags)
   const lines = html.split("<br>")
