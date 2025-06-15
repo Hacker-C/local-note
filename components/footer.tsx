@@ -11,7 +11,7 @@ export function Footer({ className }: FooterProps) {
     <footer
       className={`text-center py-4 text-sm text-theme-text-muted transition-colors duration-300 ${className || ""}`}
     >
-      @MurphyChen {currentYear}
+      @MurphyChen {currentYear} | <a href={"https://github.com/Hacker-C/local-note"} target="_blank">Source</a>
     </footer>
   )
 }
