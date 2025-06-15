@@ -7,9 +7,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "My Notes",
-  description: "Capture your thoughts and ideas",
-    generator: 'v0.dev'
+  title: "Local Note | all data processing stay 100% local",
+  description: "Capture your thoughts and ideas"
 }
 
 export default function RootLayout({
